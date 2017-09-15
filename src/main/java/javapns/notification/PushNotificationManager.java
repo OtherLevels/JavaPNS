@@ -353,7 +353,21 @@ public class PushNotificationManager {
    * @throws CommunicationException thrown if a communication error occurs
    */
   public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter) throws CommunicationException {
-    return sendNotification(device, payload, closeAfter, SEQUENTIAL_IDENTIFIER);
+    return sendNotification(device, payload, closeAfter, SEQUENTIAL_IDENTIFIER, 0);
+  }
+
+  /**
+   * Send a notification (Payload) to the given device
+   *
+   * @param device     the device to be notified
+   * @param payload    the payload to send
+   * @param closeAfter indicates if the connection should be closed after the payload has been sent
+   * @param expiry     indicates expiry of the message in seconds. It is 0 by default (no expiration).
+   * @return a pushed notification with details on transmission result and error (if any)
+   * @throws CommunicationException thrown if a communication error occurs
+   */
+  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, long expiry) throws CommunicationException {
+    return sendNotification(device, payload, closeAfter, SEQUENTIAL_IDENTIFIER, expiry);
   }
 
   /**
@@ -379,8 +393,9 @@ public class PushNotificationManager {
    * @return a pushed notification with details on transmission result and error (if any)
    * @throws CommunicationException thrown if a communication error occurs
    */
-  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, final int identifier) throws CommunicationException {
+  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, final int identifier, long expiry) throws CommunicationException {
     final PushedNotification pushedNotification = new PushedNotification(device, payload, identifier);
+    pushedNotification.setExpiry(expiry);
     sendNotification(pushedNotification, closeAfter);
     return pushedNotification;
   }
@@ -775,5 +790,9 @@ public class PushNotificationManager {
     alert.append(useEnhancedNotificationFormat ? "Enhanced" : "Simple").append(" format / ").append(payload.getCharacterEncoding()).append("").append("");
 
     return alert.toString();
+  }
+
+  public SSLSocket getSocket() {
+    return socket;
   }
 }
