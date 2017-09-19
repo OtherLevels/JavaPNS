@@ -9,7 +9,7 @@
 
   <name>JavaPNS</name>
   <description>Java API for Apple Push Notification Service</description>
-  <url>https://github.com/mlaccetti/JavaPNS</url>
+  <url>https://github.com/otherlevels/JavaPNS</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
