@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * The main class used to send notification and handle a connection to Apple SSLServerSocket.
@@ -454,6 +455,7 @@ public class PushNotificationManager {
               this.socket.getOutputStream().write(bytes);
               streamConfirmed = true;
             } else {
+              Thread.sleep(10 + new Random().nextInt(200));
               logger.debug("* Simulation only: would have streamed " + bytes.length + "-bytes message now..");
             }
           } catch (final Exception e) {
