@@ -366,7 +366,7 @@ public class PushNotificationManager {
    * @return a pushed notification with details on transmission result and error (if any)
    * @throws CommunicationException thrown if a communication error occurs
    */
-  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, long expiry) throws CommunicationException {
+  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, int expiry) throws CommunicationException {
     return sendNotification(device, payload, closeAfter, SEQUENTIAL_IDENTIFIER, expiry);
   }
 
@@ -393,9 +393,9 @@ public class PushNotificationManager {
    * @return a pushed notification with details on transmission result and error (if any)
    * @throws CommunicationException thrown if a communication error occurs
    */
-  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, final int identifier, long expiry) throws CommunicationException {
+  public PushedNotification sendNotification(final Device device, final Payload payload, final boolean closeAfter, final int identifier, int expiry) throws CommunicationException {
     final PushedNotification pushedNotification = new PushedNotification(device, payload, identifier);
-    pushedNotification.setExpiry(expiry);
+    pushedNotification.getPayload().setExpiry(expiry);
     sendNotification(pushedNotification, closeAfter);
     return pushedNotification;
   }

@@ -23,6 +23,10 @@ public class PushedNotification {
   private ResponsePacket response;
 
   private int identifier;
+
+  /* This expiry value is set after message is pushed to APNs.
+     It is a unix time in contrast with `payload.getExpiry`
+  */
   private long expiry;
   private int transmissionAttempts;
   private boolean transmissionCompleted;
