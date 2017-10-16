@@ -455,7 +455,9 @@ public class PushNotificationManager {
               this.socket.getOutputStream().write(bytes);
               streamConfirmed = true;
             } else {
-              Thread.sleep(10 + new Random().nextInt(200));
+              // simulating delay between 2 and 16 ms.
+              // approximate real delay measured is between 1 and 9 ms.
+              Thread.sleep(2 + new Random().nextInt(14));
               logger.debug("* Simulation only: would have streamed " + bytes.length + "-bytes message now..");
             }
           } catch (final Exception e) {
