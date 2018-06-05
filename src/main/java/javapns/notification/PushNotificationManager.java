@@ -146,7 +146,7 @@ public class PushNotificationManager {
     try {
       this.connectionToAppleServer = new ConnectionToNotificationServer(server);
       this.socket = connectionToAppleServer.getSSLSocket();
-
+      this.socket.setKeepAlive(true);
       if (heavyDebugMode) {
         dumpCertificateChainDescription();
       }
