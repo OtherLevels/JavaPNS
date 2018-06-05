@@ -452,15 +452,17 @@ public class PushNotificationManager {
           boolean streamConfirmed = false;
           try {
             if (!simulationMode) {
+              logger.info("Sending notification " + payload.toString() +  " to device: " + token);
               this.socket.getOutputStream().write(bytes);
               streamConfirmed = true;
             } else {
               // simulating delay between 2 and 12 ms.
               // approximate real delay measured is between 1 and 9 ms.
               Thread.sleep(2 + new Random().nextInt(10));
-              logger.debug("* Simulation only: would have streamed " + bytes.length + "-bytes message now..");
+              logger.info("* Simulation only: would have streamed " + bytes.length + "-bytes message now..");
             }
           } catch (final Exception e) {
+            logger.warn("Error sending notification to device: " + token + " error message : " + e.getMessage());
             if (e.toString().contains("certificate_unknown")) {
               throw new InvalidCertificateChainException(e.getMessage());
             }
