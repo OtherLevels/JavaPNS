@@ -139,7 +139,9 @@ public abstract class ConnectionToAppleServer {
       if (ProxyManager.isUsingProxy(server)) {
         return tunnelThroughProxy(sslSocketFactory);
       } else {
-        return (SSLSocket) sslSocketFactory.createSocket(getServerHost(), getServerPort());
+        SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(getServerHost(), getServerPort());
+        socket.setKeepAlive(true);
+        return socket;
       }
     } catch (final Exception e) {
       throw new CommunicationException("Communication exception: " + e, e);
@@ -158,7 +160,7 @@ public abstract class ConnectionToAppleServer {
 
     /* overlay the tunnel socket with SSL */
     socket = (SSLSocket) socketFactory.createSocket(tunnel, getServerHost(), getServerPort(), true);
-
+    socket.setKeepAlive(true);
     /* register a callback for handshaking completion event */
     socket.addHandshakeCompletedListener(event -> {
       logger.debug("Handshake finished!");
